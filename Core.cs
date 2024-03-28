@@ -23,6 +23,7 @@ namespace JuicyGrapeApps.Core
     {
         private static Dictionary<int, int> arrayIndex = new Dictionary<int, int>();
         public static int lastIndex = 0;
+        private static Action<int, int> rescan;
 
         // Scrolling action to perform.
         public enum ScrollingAction
@@ -63,10 +64,21 @@ namespace JuicyGrapeApps.Core
                 // Save current collection's index in 'arrayIndex' dictionary
                 storeIndex(collection, index);
                 lastIndex = index;
+
+                if (rescan != null)
+                    for (int idx = 0; idx < length; idx++) rescan.Invoke(index, idx);
+
                 return index;
             }
             catch { return 0; }
         }
+
+        /// <summary>
+        /// Call back method for the rescan of collection, no recan will be preformed if
+        /// this listener is not set.
+        /// </summary>
+        /// <param name="value"></param>
+        internal static void OnRescanListener(Action<int, int> value) => rescan = value;
 
         /// Usage: Use this overload to scan the children of GameObject;
         /// 
