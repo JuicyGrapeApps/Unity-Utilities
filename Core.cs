@@ -22,8 +22,8 @@ namespace JuicyGrapeApps.Core
     public static class Scroll
     {
         private static Dictionary<int, int> arrayIndex = new Dictionary<int, int>();
-        public static int lastIndex = 0;
         private static Action<int, int> rescan;
+        public static int lastIndex = 0;
 
         // Scrolling action to perform.
         public enum ScrollingAction
